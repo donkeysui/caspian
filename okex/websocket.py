@@ -8,7 +8,7 @@ import hmac
 import base64
 import zlib
 import datetime
-from const import api_key, secret_key, passphrase
+from const import api_key, secret_key, passphrase, store_to_file
 
 
 def get_timestamp():
@@ -320,7 +320,7 @@ async def subscribe(url, api_key, passphrase, secret_key, channels):
                             res_b = await ws.recv()
                             time = get_timestamp()
                             res = inflate(res_b).decode('utf-8')
-                            do_something()
+                            store_to_file(res)
                             continue
                         except Exception as e:
                             time = get_timestamp()
