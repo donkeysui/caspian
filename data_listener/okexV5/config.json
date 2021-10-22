@@ -1,0 +1,18 @@
+{
+    "SERVER_ID": "okex_link_market",
+    "LOG": {
+        "console": true,
+        "level": "INFO",
+        "path": "./log/",
+        "name": "okex_link_market.log",
+        "clear": false,
+        "backup_count": 5
+    },
+	"DATA": {
+		"symbols": ["ADA-USDT-SWAP", "ADA-USD-SWAP"],
+        "channels": ["orderbook", "trade"],
+        "silent": true,
+        "influx_database": "test",
+        "file": "",
+	}
+}

@@ -1,0 +1,25 @@
+{
+  "LOG": {
+    "console": true,
+    "level": "INFO",
+    "path": "/logs/ftx_strategy",
+    "name": "ftx_strategy.log",
+    "clear": true,
+    "backup_count": 5
+  },
+  "ACCOUNTS": {
+      "platform": "ftx",
+      "strategy": "",
+      "subaccount_name": "",
+      "access_key": "",
+      "secret_key": ""
+    },
+  "symbols": [{
+    "symbol": "UNI",
+    "perp_symbol": "UNI-PERP",
+    "futu_symbol": "UNI-0924",
+    "decimal": 3,
+    "init_asset": 1000,
+    "level": 4
+    }]
+}
