@@ -3,6 +3,7 @@ from loguru import logger
 import const
 import os
 
+
 class FileWriter:
 
     def __init__(self, configs):
@@ -30,14 +31,17 @@ class FileWriter:
         self._dir_url = dir_url
         self._file_format = file_format
 
-        self.memory_data_length = 0;
+        self._file_index_digits = const.DEFAULT_FILE_INDEX_DIGITS
+
+        self.memory_data_length = 0
         self.File = None
 
     def __repr__(self):
         pass
 
-    def open_file_handle(self, filename: str) -> None:
+    def _open_file_handle(self) -> None:
         if not self.File:
+            filename = self._get_filename(index=1)
             self.File = open(filename, 'a')
 
     def append_memory(self, data: dict) -> None:
@@ -53,28 +57,59 @@ class FileWriter:
         elif isinstance(data, str):
             line_string = data
 
+        if not check_string_available(line_string):
+            raise AttributeError(f"{line_string} not applicable string format.")
+            return
+
+        self.File.write(f"{line_string}\n")
         self.memory_data_length += 1
 
         if self.memory_data_length >= const.DEFAULT_MOMERY_CHUCK_SIZE:
-            self.File.flush() # Flush缓冲区，写入文件
-            self.memory_data_length = 0 # memory标记位置0
-            self._check_file_chuck() # 检查文件大小是否超过设定大小
-
+            self.File.flush()  # Flush缓冲区，写入文件
+            self.memory_data_length = 0  # memory标记位置0
+            self._check_file_chuck()  # 检查文件大小是否超过设定大小
 
     def _check_file_chuck(self) -> None:
         file_size = os.path.getsize(self.File.name)
         if file_size > const.DEFAULT_FILE_CHUCK_SIZE:
-            change()
+            self._renames_all_file()
 
-    def avail_file_format(self) -> list:
+    def _renames_all_file(self):
+        all_files = os.listdir(self._dir_url)
+        same_type_files = [filename for filename in all_files if filename.count(self._get_filename())]
+        files_amount = len(same_type_files)
+        for index in range(files_amount, 0, -1):
+            src_filename = self._get_filename(index)
+            dst_filename = self._get_filename(index + 1)
+            os.rename(src_filename, dst_filename, self._dir_url, self._dir_url)
+
+    def _get_index(self, index: int) -> str:
+        digits = self._file_index_digits
+        if len(str(index)) > digits:
+            raise AttributeError(f"index {index} exceeded the limit of digits.")
+        return (digits - len(str(index))) * '0' + str(index)
+
+    def _get_next_filename(self, filename: str):
+        filename_root, file_index = filename.split('.')
+        next_index = self._get_index(int(file_index) + 1)
+        return f"{filename_root}.{next_index}"
+
+    def _avail_file_format(self) -> list:
         return const.AVAIL_FILE_FORMAT
 
-    def get_filename(self, platform: str, symbol: str, data_type: str, file_index: int) -> str:
+    def _get_filename(self, index=None) -> str:
+        exchange = self._exchange
+        symbol = self._symbol
+        data_type = self._data_type
         now = datetime.datetime.today()
         year = now.year
         month = now.month
         day = now.day
-        file_format = self.file_format
-        filename = f"{platform}-{symbol}-{data_type}-{year}-{month}-{day}-{file_index}.{file_format}"
+        if isinstance(index, int):
+            index = self._get_index(index)
+        if index:
+            filename = f"{exchange}-{symbol}-{data_type}-{year}-{month}-{day}.{index}"
+        else:
+            filename = f"{exchange}-{symbol}-{data_type}-{year}-{month}-{day}"
         return filename
 
