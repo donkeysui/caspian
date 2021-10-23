@@ -42,7 +42,7 @@ class FileWriter:
     def _open_file_handle(self) -> None:
         if not self.File:
             filename = self._get_filename(index=1)
-            self.File = open(filename, 'a')
+            self.File = open(f"{self._dir_url}/{filename}", 'a')
 
     def append_memory(self, data: dict) -> None:
         def check_string_available(string):
