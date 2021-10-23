@@ -36,11 +36,13 @@ class FileWriter:
         self.memory_data_length = 0
         self.File = None
 
+        self._open_file_handle()
+
     def __repr__(self):
         pass
 
     def _open_file_handle(self) -> None:
-        if not self.File:
+        if not self.File or self.File.closed:
             filename = self._get_filename(index=1)
             self.File = open(f"{self._dir_url}/{filename}", 'a')
 
@@ -75,13 +77,15 @@ class FileWriter:
             self._renames_all_file()
 
     def _renames_all_file(self):
+        self.File.close()
         all_files = os.listdir(self._dir_url)
         same_type_files = [filename for filename in all_files if filename.count(self._get_filename())]
         files_amount = len(same_type_files)
         for index in range(files_amount, 0, -1):
             src_filename = self._get_filename(index)
             dst_filename = self._get_filename(index + 1)
-            os.rename(src_filename, dst_filename, self._dir_url, self._dir_url)
+            os.rename(f"{self._dir_url}/{src_filename}", f"{self._dir_url}/{dst_filename}")
+        self._open_file_handle()
 
     def _get_index(self, index: int) -> str:
         digits = self._file_index_digits
@@ -112,4 +116,3 @@ class FileWriter:
         else:
             filename = f"{exchange}-{symbol}-{data_type}-{year}-{month}-{day}"
         return filename
-
