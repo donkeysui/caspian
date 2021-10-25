@@ -15,13 +15,20 @@ import copy
 from pprint import pprint
 import datetime
 from influxdb import InfluxDBClient
+from FileWriter import FileWriter
+from collections import OrderedDict
+
 
 class Listener:
     def __init__(self, configs):
+
         symbol = configs.get('symbol', None)
         influx_database = configs.get('influx_database', None)
         silent = configs.get('silent', None)
         channels = configs.get('channels', None)
+        file = configs.get('file', None)
+        file_url = configs.get('file_url', None)
+        platform = configs.get('platform', None)
 
         if symbol is None:
             logger.error("symbol is None, check the config file!")
@@ -31,10 +38,14 @@ class Listener:
             logger.error("channels is None, check the config file!")
             return
 
+        if platform is None:
+            logger.error("platform is None, check the config file!")
+            return
+
         self._swap_symbol = [x for x in symbol]
 
         self.market = OkexV5Market(
-            platform="OKEX_V5",
+            platform=platform,
             symbols=self._swap_symbol,
             channels=channels,
             orderbook_length=5,
@@ -47,11 +58,31 @@ class Listener:
         self._last_trade = dict()
         self.isInitialized = None
         self.silent = silent
+
         if influx_database:
             self.influx = InfluxDBClient(database=influx_database)
         else:
             self.influx = None
-        self.now_time = time.time()   
+
+        if file and file_url:
+
+            self.file_writer_dict = dict()
+            for single_symbol in self._swap_symbol:
+
+                self.file_writer_dict[single_symbol] = dict()
+                for single_channel in channels:
+                    fw_configs = dict()
+                    fw_configs['symbol'] = single_symbol
+                    fw_configs['exchange'] = platform
+                    fw_configs['data_type'] = single_channel
+                    fw_configs['file_url'] = file_url
+                    self.file_writer_dict[single_symbol][single_channel] = FileWriter(fw_configs)
+        else:
+            if file or file_url:
+                logger.error("Have one of file or file_url, but both of them needed!")
+            self.file_writer = None
+
+        self.now_time = time.time()
  
     async def _orderbook_callback(self, data: Orderbook):
         platform = data.platform
@@ -121,7 +152,7 @@ class Listener:
                         }])
                 
                 if self.file:
-                    
+                    self.file_writer_dict[symbol]['orderbook'].write(OrderedDict(d))
 
                 if not self.silent:
                     logger.info(d)
@@ -154,6 +185,9 @@ class Listener:
                             "fields": d
                         }
                     ])
+
+                if self.file:
+                    self.file_writer_dict[symbol]['trades'].write(OrderedDict(d))
 
                 if not self.silent:
                     logger.info(d)

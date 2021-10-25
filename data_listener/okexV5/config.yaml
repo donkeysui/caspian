@@ -1,0 +1,6 @@
+general:
+  symbols: [ "ADA-USDT-SWAP", "ADA-USD-SWAP" ]
+  channels: [ "orderbook", "trade" ]
+  silent: True
+  influx_database: ~
+  files_store_url: ""

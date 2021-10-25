@@ -11,7 +11,7 @@ class FileWriter:
         symbol = configs.get('symbol', None)
         exchange = configs.get('exchange', None)
         data_type = configs.get('data_type', None)
-        dir_url = configs.get('dir_url', None)
+        file_url = configs.get('file_url', None)
         file_format = configs.get('file_format')
 
         if not symbol:
@@ -20,15 +20,15 @@ class FileWriter:
             logger.error("INIT ERROR -> FileWriter -> exchange is None! Please check the configs")
         if not data_type:
             logger.error("INIT ERROR -> FileWriter -> data_type is None! Please check the configs")
-        if not dir_url:
-            logger.error("INIT ERROR -> FileWriter -> dir_url is None! Please check the configs")
+        if not file_url:
+            logger.error("INIT ERROR -> FileWriter -> file_url is None! Please check the configs")
         if not file_format:
             logger.error("INIT ERROR -> FileWriter -> file_format is None! Please check the configs")
 
         self._symbol = symbol
         self._exchange = exchange
         self._data_type = data_type
-        self._dir_url = dir_url
+        self._file_url = file_url
         self._file_format = file_format
 
         self._file_index_digits = const.DEFAULT_FILE_INDEX_DIGITS
@@ -44,9 +44,9 @@ class FileWriter:
     def _open_file_handle(self) -> None:
         if not self.File or self.File.closed:
             filename = self._get_filename(index=1)
-            self.File = open(f"{self._dir_url}/{filename}", 'a')
+            self.File = open(f"{self._file_url}/{filename}", 'a')
 
-    def append_memory(self, data: dict) -> None:
+    def write(self, data: dict) -> None:
         def check_string_available(string):
             if string.startswith(',') or string.endswith(','):
                 return False
@@ -55,7 +55,7 @@ class FileWriter:
             return True
 
         if isinstance(data, dict):
-            line_string = [item for item in data.values()].join(',')
+            line_string = ','.join([item for item in data.values()])
         elif isinstance(data, str):
             line_string = data
 
@@ -78,13 +78,13 @@ class FileWriter:
 
     def _renames_all_file(self):
         self.File.close()
-        all_files = os.listdir(self._dir_url)
+        all_files = os.listdir(self._file_url)
         same_type_files = [filename for filename in all_files if filename.count(self._get_filename())]
         files_amount = len(same_type_files)
         for index in range(files_amount, 0, -1):
             src_filename = self._get_filename(index)
             dst_filename = self._get_filename(index + 1)
-            os.rename(f"{self._dir_url}/{src_filename}", f"{self._dir_url}/{dst_filename}")
+            os.rename(f"{self._file_url}/{src_filename}", f"{self._file_url}/{dst_filename}")
         self._open_file_handle()
 
     def _get_index(self, index: int) -> str:
