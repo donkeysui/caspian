@@ -8,6 +8,7 @@
 """
 import sys
 import json
+import yaml
 
 
 def initialize(symbol):
@@ -18,15 +19,16 @@ def initialize(symbol):
 def main():
     if len(sys.argv) > 1:
         input_ = sys.argv[1]
-        config_file = f"{input_}.json"
+        config_file = f"{input_}.yaml"
         
         with open(config_file) as file:
-            config_json = json.load(file)
+            config_dict = yaml.load(file)
             configs = dict()
-            configs["symbol"] = config_json['DATA']['symbols']
-            configs["channels"] = config_json['DATA']['channels']
-            configs["silent"] = config_json['DATA']['silent']
-            configs["influx_database"] = config_json['DATA']['influx_database']
+            configs["symbol"] = config_dict['symbol']
+            configs["channels"] = config_dict['channels']
+            configs["silent"] = config_dict['silent']
+            configs["influx_database"] = config_dict['influx_database']
+            configs["platform"] = config_dict["platform"]
     else:
         config_file = None
 
@@ -34,7 +36,6 @@ def main():
     quant.initialize(config_file)
     initialize(configs)
     quant.start()
-
 
 if __name__ == '__main__':
     sys.path.append('/home/public/jason_turkey_trade/')

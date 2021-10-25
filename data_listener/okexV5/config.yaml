@@ -1,6 +1,7 @@
 general:
   symbols: [ "ADA-USDT-SWAP", "ADA-USD-SWAP" ]
-  channels: [ "orderbook", "trade" ]
+  channels: [ "orderbook", "trades" ]
   silent: True
+  platform: OKEX
   influx_database: ~
-  files_store_url: ""
+  file_url: ""
