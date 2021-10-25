@@ -26,6 +26,8 @@ def main():
             config_dict = config_dict['DATA']
             configs = dict()
             configs["symbol"] = config_dict['symbol']
+            configs["file"] = config_dict["file"]
+            configs["file_url"] = config_dict["file_url"]
             configs["channels"] = config_dict['channels']
             configs["silent"] = config_dict['silent']
             configs["influx_database"] = config_dict['influx_database']

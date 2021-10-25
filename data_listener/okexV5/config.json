@@ -14,7 +14,7 @@
         "silent": true,
 		"platform": "OKEX",
         "influx_database": false,
-        "file": "",
-		"file_url": ""
+        "file": "csv",
+		"file_url": "/home/public/"
 	}
 }

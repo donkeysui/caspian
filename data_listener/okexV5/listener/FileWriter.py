@@ -55,7 +55,7 @@ class FileWriter:
             return True
 
         if isinstance(data, dict):
-            line_string = ','.join([item for item in data.values()])
+            line_string = ','.join([str(item) for item in data.values()])
         elif isinstance(data, str):
             line_string = data
 

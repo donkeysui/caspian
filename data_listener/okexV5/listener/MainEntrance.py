@@ -80,7 +80,7 @@ class Listener:
         else:
             if file or file_url:
                 logger.error("Have one of file or file_url, but both of them needed!")
-            self.file_writer = None
+            self.file_writer_dict = None
 
         self.now_time = time.time()
  
@@ -151,7 +151,7 @@ class Listener:
                             "fields": d
                         }])
                 
-                if self.file:
+                if self.file_writer_dict:
                     self.file_writer_dict[symbol]['orderbook'].write(OrderedDict(d))
 
                 if not self.silent:
@@ -186,8 +186,8 @@ class Listener:
                         }
                     ])
 
-                if self.file:
-                    self.file_writer_dict[symbol]['trades'].write(OrderedDict(d))
+                if self.file_writer_dict:
+                    self.file_writer_dict[symbol]['trade'].write(OrderedDict(d))
 
                 if not self.silent:
                     logger.info(d)
