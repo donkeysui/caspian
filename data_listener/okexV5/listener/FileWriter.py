@@ -1,6 +1,6 @@
 import datetime
 from loguru import logger
-import const
+from . import const
 import os
 
 

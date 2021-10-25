@@ -9,10 +9,12 @@
         "backup_count": 5
     },
 	"DATA": {
-		"symbols": ["ADA-USDT-SWAP", "ADA-USD-SWAP"],
+		"symbol": ["ADA-USDT-SWAP", "ADA-USD-SWAP"],
         "channels": ["orderbook", "trade"],
         "silent": true,
-        "influx_database": "test",
+		"platform": "OKEX",
+        "influx_database": false,
         "file": "",
+		"file_url": ""
 	}
 }

@@ -19,10 +19,11 @@ def initialize(symbol):
 def main():
     if len(sys.argv) > 1:
         input_ = sys.argv[1]
-        config_file = f"{input_}.yaml"
-        
+        config_file = f"{input_}.json"
         with open(config_file) as file:
-            config_dict = yaml.load(file)['general']
+            
+            config_dict = json.load(file)
+            config_dict = config_dict['DATA']
             configs = dict()
             configs["symbol"] = config_dict['symbol']
             configs["channels"] = config_dict['channels']

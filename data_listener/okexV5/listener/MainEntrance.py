@@ -15,7 +15,7 @@ import copy
 from pprint import pprint
 import datetime
 from influxdb import InfluxDBClient
-from FileWriter import FileWriter
+from .FileWriter import FileWriter
 from collections import OrderedDict
 
 
