@@ -22,7 +22,7 @@ def main():
         config_file = f"{input_}.yaml"
         
         with open(config_file) as file:
-            config_dict = yaml.load(file)
+            config_dict = yaml.load(file)['general']
             configs = dict()
             configs["symbol"] = config_dict['symbol']
             configs["channels"] = config_dict['channels']
