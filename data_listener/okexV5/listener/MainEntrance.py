@@ -117,8 +117,11 @@ class Listener:
             bid_4_vol = float(data.bids[3][1])
             bid_5_vol = float(data.bids[4][1])
 
+            timestamp = data.timestamp
+
             d = {
                 "symbol": symbol,
+                "timestamp": timestamp,
                 "ap1": ask_1_price,
                 "ap2": ask_2_price,
                 "ap3": ask_3_price,

@@ -44,7 +44,13 @@ class FileWriter:
     def _open_file_handle(self) -> None:
         if not self.File or self.File.closed:
             filename = self._get_filename(index=1)
-            self.File = open(f"{self._file_url}/{filename}", 'a')
+            datafile_list = os.listdir(self._file_url)
+            for i in range(int(10**self._file_index_digits)):
+                if filename in datafile_list:
+                    filename = self._get_next_filename(filename)
+                else:
+                    self.File = open(f"{self._file_url}/{filename}", 'a')
+                    return
 
     def write(self, data: dict) -> None:
         def check_string_available(string):
@@ -75,6 +81,17 @@ class FileWriter:
         file_size = os.path.getsize(self.File.name)
         if file_size > const.DEFAULT_FILE_CHUCK_SIZE:
             self._renames_all_file()
+        if self._get_today_string() != self._last_write_chuck_day:
+            self.File.close()
+            self._open_file_handle()
+        self._last_write_chuck_day = self._get_today_string()
+
+    def _get_today_string(self):
+        now = datetime.datetime.today()
+        year = now.year
+        month = now.month
+        day = now.day
+        return f"{year}-{month}-{day}"
 
     def _renames_all_file(self):
         self.File.close()
