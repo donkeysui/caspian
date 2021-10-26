@@ -198,6 +198,7 @@ class OkexV5Market(Websocket):
             bids_p = self.update_bids(bids, bids_p)
             asks_p = self.update_asks(asks, asks_p)
 
+
             checksum = data[0]['checksum']
             check_num = self.check(bids_p, asks_p)
             if check_num == checksum:
@@ -209,6 +210,7 @@ class OkexV5Market(Websocket):
             d = copy.copy(self._orderbook[f"{arg['instId']}"])
             d.asks = d.asks[:self._orderbook_length]
             d.bids = d.bids[:self._orderbook_length]
+            d.timestamp = d.timestamp
 
             SingleTask.run(self._orderbook_update_callback, d)
 

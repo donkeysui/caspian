@@ -36,6 +36,7 @@ class FileWriter:
         self.memory_data_length = 0
         self.File = None
 
+        self._last_write_chuck_day = self._get_today_string()
         self._open_file_handle()
 
     def __repr__(self):
