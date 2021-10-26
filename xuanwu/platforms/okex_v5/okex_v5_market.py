@@ -210,7 +210,7 @@ class OkexV5Market(Websocket):
             d = copy.copy(self._orderbook[f"{arg['instId']}"])
             d.asks = d.asks[:self._orderbook_length]
             d.bids = d.bids[:self._orderbook_length]
-            d.timestamp = d.timestamp
+            d.timestamp = data[0]['timestamp']
 
             SingleTask.run(self._orderbook_update_callback, d)
 
