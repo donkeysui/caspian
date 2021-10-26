@@ -1,6 +1,17 @@
 # Caspian
-This repository is used to stored websocket data from different crypto-exchange.
+This repository is used to stored websockets data from different crypto-exchange, 
 
-Now in developing progress. 
+## Install
+`pip install caspian`
 
-CLI-interface coming soon.
+## Quick Start
+```buildoutcfg
+# print help message
+caspian -h
+
+# show available 
+caspian list
+
+# subscribe new
+caspian add platform 
+```
