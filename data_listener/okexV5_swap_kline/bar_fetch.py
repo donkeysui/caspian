@@ -13,7 +13,7 @@ class BarFetcher:
 
         self._get_threshold = 0.1
         self.conn = ccxt.okex()
-        self.dbclient = DataFrameClient()
+        self.dbclient = DataFrameClient(database='test')
         self.symbols = symbols
         if measurement:
             self.influx_measurement = measurement
