@@ -41,5 +41,5 @@ def main():
     quant.start()
 
 if __name__ == '__main__':
-    sys.path.append('/home/public/jason_turkey_trade/')
+    sys.path.append('/home/public/caspian')
     main()

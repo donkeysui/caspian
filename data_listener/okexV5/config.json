@@ -9,12 +9,12 @@
         "backup_count": 5
     },
 	"DATA": {
-		"symbol": ["ADA-USDT-SWAP", "ADA-USD-SWAP"],
+		"symbol": ["ETH-USD-SWAP", "ETH-USDT-SWAP"],
         "channels": ["orderbook", "trade"],
         "silent": true,
 		"platform": "OKEX",
         "influx_database": false,
         "file": "csv",
-		"file_url": "/home/public/"
+		"file_url": "/home/public/eth_depth_file/"
 	}
 }
