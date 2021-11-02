@@ -17,7 +17,7 @@ class FileConcatenater:
         self._src_url = config['src_url'] if config['src_url'].endswith('/') else config['src_url'] + '/'
         self._dst_url = config['dst_url'] if config['dst_url'].endswith('/') else config['dst_url'] + '/'
 
-        if not isinstance(self._src_url, list):
+        if not isinstance(self._src_url, list) and False:
             self._src_url = [self._src_url]
 
     def _get_roots(self):
