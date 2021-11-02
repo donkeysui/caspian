@@ -1,4 +1,5 @@
 {
   "src_url": "/home/public/eth_depth_file",
-  "dst_url": "/home/public/data_package"
+  "dst_url": "/home/public/data_package",
+  "file_type": "hdf"
 }

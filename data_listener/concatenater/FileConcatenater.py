@@ -1,6 +1,7 @@
 import os
 import json
-
+from .const import trade_columns, orderbook_columns
+import pandas as pd
 
 class FileConcatenater:
 
@@ -16,9 +17,13 @@ class FileConcatenater:
 
         self._src_url = config['src_url'] if config['src_url'].endswith('/') else config['src_url'] + '/'
         self._dst_url = config['dst_url'] if config['dst_url'].endswith('/') else config['dst_url'] + '/'
+        self._file_type = config['file_type']
 
         if not isinstance(self._src_url, list) and False:
             self._src_url = [self._src_url]
+
+    def get_file_type(self):
+        return self._file_type
 
     def _get_roots(self):
         raw_data_files = os.listdir(self._src_url)
@@ -37,20 +42,46 @@ class FileConcatenater:
         result.sort(reverse=True)
         return result
 
-    def _concatenate(self, root):
+    def _concatenate_csv(self, root):
         filelist = self._get_root_files(root)
         with open(f'{self._dst_url}{root}', 'a') as file:
             for filename in filelist:
                 with open(f'{self._src_url}{filename}') as subfile:
                     file.write(subfile.read())
 
+    def _concatenate_hdf(self, root):
+        filelist = self._get_root_files(root)
+        if root.count('orderbook'):
+            columns = orderbook_columns
+        elif root.count('trade'):
+            columns = trade_columns
+        else:
+            raise AttributeError("Invalid File Type, Not in orderbook and trade.")
+
+        res_df = None
+        for filename in filelist:
+            if res_df is None:
+                res_df = pd.read_csv(f"{self._src_url}{filename}", columns=columns)
+
     # main function
     def concatenate_all(self):
-        all_roots = self._get_roots()
-        for root in all_roots:
-            self._concatenate(root)
+
+        if self._file_type == 'csv':
+            all_roots = self._get_roots()
+            for root in all_roots:
+                self._concatenate_csv(root)
+
+        elif self._file_type == 'hdf':
+            all_roots = self._get_roots()
+            for root in all_roots:
+
 
 if __name__ == '__main__':
 
     concatenater = FileConcatenater()
-    concatenater.concatenate_all()
+
+    if concatenater.get_file_type() == 'csv':
+        concatenater.concatenate_all()
+
+    elif concatenater.get_file_type() == 'hdf':
+        concatenater.concatenate_all_hdf()
