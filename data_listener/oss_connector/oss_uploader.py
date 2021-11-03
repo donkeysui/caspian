@@ -1,12 +1,22 @@
 import oss2
+import json
 
 class OSSUploader:
 
     def __init__(self):
 
-        self._endpoint = 'https://oss-cn-shanghai.aliyuncs.com'
+        self._endpoint = ''
         self._access_key_id = ''
         self._access_key_secret = ''
+
+        self._read_access_file()
+
+    def _read_access_file(self):
+        with open('access_key.json') as key_file:
+            key_dict = json.load(key_file)
+            self._endpoint = key_dict['endpoint']
+            self._access_key_id = key_dict['access_key']
+            self._access_key_secret = key_dict['access_secret']
 
     def _auth(self):
         auth = oss2.Auth(self._access_key_id, self._access_key_secret)
@@ -23,7 +33,7 @@ class OSSUploader:
         bucket = self._bucket(bucket_name)
         bucket.put_object_from_file(filename, file_url)
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     uploader = OSSUploader()
-    uploader.upload_local_file('C:/Users/nd/Desktop/cryptoexchange_websocket_loads/data_listener/okexV5/listener/const.py', 'orderbook-data')
+    uploader.upload_local_file('', 'orderbook-data')
