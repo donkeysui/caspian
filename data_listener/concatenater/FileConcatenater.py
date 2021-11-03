@@ -61,7 +61,11 @@ class FileConcatenater:
         res_df = None
         for filename in filelist:
             if res_df is None:
-                res_df = pd.read_csv(f"{self._src_url}{filename}", columns=columns)
+                dataframe = pd.read_csv(f"{self._src_url}{filename}", names=columns, header=None)
+                res_df = dataframe
+            else:
+                dataframe = pd.read_csv(f"{self._src_url}{filename}", names=columns, header=None)
+                res_df.append(dataframe)
 
     # main function
     def concatenate_all(self):
@@ -74,6 +78,7 @@ class FileConcatenater:
         elif self._file_type == 'hdf':
             all_roots = self._get_roots()
             for root in all_roots:
+                self._concatenate_hdf(root)
 
 
 if __name__ == '__main__':
