@@ -89,4 +89,4 @@ if __name__ == '__main__':
         concatenater.concatenate_all()
 
     elif concatenater.get_file_type() == 'hdf':
-        concatenater.concatenate_all_hdf()
+        concatenater.concatenate_all()
