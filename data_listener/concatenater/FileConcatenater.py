@@ -66,6 +66,7 @@ class FileConcatenater:
             else:
                 dataframe = pd.read_csv(f"{self._src_url}{filename}", names=columns, header=None)
                 res_df.append(dataframe)
+        res_df.to_hdf(f"{self._dst_url}{root}.hdf", complevel=9, key='data')
 
     # main function
     def concatenate_all(self):
