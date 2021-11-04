@@ -1,6 +1,6 @@
 import os
 import json
-from .const import trade_columns, orderbook_columns
+from const import trade_columns, orderbook_columns
 import pandas as pd
 
 class FileConcatenater:

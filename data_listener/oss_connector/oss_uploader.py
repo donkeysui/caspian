@@ -36,4 +36,4 @@ class OSSUploader:
 
 if __name__ == '__main__':
     uploader = OSSUploader()
-    uploader.upload_local_file('', 'orderbook-data')
+    uploader.upload_local_file('/home/public/data_package/OKEX-ETH-USD-SWAP-orderbook-2021-11-4.hdf', 'orderbook-data')
