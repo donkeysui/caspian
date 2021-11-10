@@ -18,7 +18,7 @@ class BarFetcher:
         if measurement:
             self.influx_measurement = measurement
         else:
-            self.influx_measurement = 'swap_kline'
+            self.influx_measurement = 'futures_kline'
         self.convert = datetime.datetime.fromtimestamp
 
     def fetch(self, symbol):
