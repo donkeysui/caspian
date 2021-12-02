@@ -9,17 +9,21 @@ import time
 
 class BarFetcher:
 
-    def __init__(self, symbols, measurement=None):
+    def __init__(self, measurement=None):
 
         self._get_threshold = 0.3
         self.conn = ccxt.okex()
         self.dbclient = DataFrameClient(database='test')
-        self.symbols = symbols
         if measurement:
             self.influx_measurement = measurement
         else:
             self.influx_measurement = 'futures_kline'
+        self.symbols = self.fetch_markets()
         self.convert = datetime.datetime.fromtimestamp
+
+    def fetch_markets(self):
+        df = pd.DataFrame(self.conn.fetch_markets())
+        return list(df[df['futures']].symbol)
 
     def fetch(self, symbol):
 
@@ -51,10 +55,10 @@ if __name__ == '__main__':
     if len(sys.argv) > 1:
         config_file_name = sys.argv[1]
 
-    with open(config_file_name) as file:
-        swap_symbols = json.load(file)['symbols']
+    # with open(config_file_name) as file:
+    #     swap_symbols = json.load(file)['symbols']
 
-    Fetcher = BarFetcher(symbols=swap_symbols)
+    Fetcher = BarFetcher()
     Fetcher.all_fetch_and_write()
 
 
