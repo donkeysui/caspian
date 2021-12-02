@@ -9,7 +9,7 @@
         "backup_count": 5
     },
 	"DATA": {
-		"symbol": ["OKT-USDT", "OKB-USDT"],
+		"symbol": ["BTC-USDT-SWAP", "ETH-USDT-SWAP", "MATIC-USDT-SWAP", "GALA-USDT-SWAP", "SHIB-USDT-SWAP", "SOL-USDT-SWAP"],
         "channels": ["orderbook", "trade"],
         "silent": true,
 		"platform": "OKEX",
