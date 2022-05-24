@@ -1,9 +1,9 @@
 # -*— coding:utf-8 -*-
 """
-  @ Author:   Mr.Hat
-  @ Email:    shenghong6560@gmail.com
-  @ Date:     2021/1/13 13:52
-  @ Description: huobi USDT合约市场数据，全仓模式和逐仓模式公用数据模块
+  @ Author:   Turkey
+  @ Email:    suiminyan@gmail.com
+  @ Date:     2021/9/22 10:40
+  @ Description: 
   @ History:
 """
 

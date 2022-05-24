@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-  @ Author:   Mr.Hat
-  @ Email:    shenghong6560@gmail.com
-  @ Date:     2020/9/27 17:17
-  @ Description: 阿里云电话和钉钉报警封装
+  @ Author:   Turkey
+  @ Email:    suiminyan@gmail.com
+  @ Date:     2021/9/22 10:40
+  @ Description: 
   @ History:
 """
 import hmac

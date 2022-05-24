@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-  @ Author:   Mr.Hat
-  @ Email:    shenghong6560@gmail.com
+  @ Author:   Turkey
+  @ Email:    suiminyan@gmail.com
   @ Date:     2021/9/27 0:09
   @ Description: 
   @ History:

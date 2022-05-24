@@ -1,11 +1,10 @@
 # -*- coding: UTF-8 -*-
 """
- * @Title: okex_ws
- * @ProjectName: xuanwu
- * @Description: okex websocket客户端
- * @Author: Mr.Hat
- * @Email: shenghong6560@gmail.com
- * @Date: 2020/9/2521:54
+  @ Author:   Turkey
+  @ Email:    suiminyan@gmail.com
+  @ Date:     2021/9/22 10:40
+  @ Description: 
+  @ History:
 """
 import gzip
 import json

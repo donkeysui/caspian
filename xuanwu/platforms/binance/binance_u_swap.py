@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-  @ Author:   Mr.Hat
-  @ Email:    shenghong6560@gmail.com
-  @ Date:     2020/11/11 14:39
+  @ Author:   Turkey
+  @ Email:    suiminyan@gmail.com
+  @ Date:     2021/11/11 14:39
   @ Description: Binance USDT永续合约接口
   @ History:
 """

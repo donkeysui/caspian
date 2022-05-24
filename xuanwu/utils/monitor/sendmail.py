@@ -6,7 +6,6 @@
   @ Description: 邮件类封装
   @ History:
 """
-
 import email
 import asyncio
 from email.mime.text import MIMEText
